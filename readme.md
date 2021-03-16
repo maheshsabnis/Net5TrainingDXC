@@ -116,3 +116,18 @@ DbConbtext
 - ASP.NET Core Web App DI Improvements w.r.t. EF Core 5, i.e. DbConetxtFactory
 
 
+# Hands-on-Labs
+1. CReate a base Type as Insurance with Following Attributes
+	- Id, IssueDate, MaturityDate, PremiumAmount, CustomerName
+2. Create a Derive Type from Insurance as follows
+	- Health
+		- AppliesTo (Info about Dieses)
+		- CashLess
+	- Auto
+		- EngineNo
+		- ChesisNo
+		- RegisterationNo
+Use a Table-Per-Hierarchy Featuture of EF Core 5 to Generate Table for Performing CRUD operations 
+
+
+
