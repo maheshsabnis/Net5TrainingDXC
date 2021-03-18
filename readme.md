@@ -129,5 +129,35 @@ DbConbtext
 		- RegisterationNo
 Use a Table-Per-Hierarchy Featuture of EF Core 5 to Generate Table for Performing CRUD operations 
 
+# Hands-On Lab API
+1. Create a Search API that will accept Search Conditions to Search Records from the Database Tables with following scenarios
+
+- Create Department and Employee Tables
+
+
+CREATE TABLE [dbo].[Department] (
+    [DeptNo]   INT           NOT NULL,
+    [DeptName] VARCHAR (200) NOT NULL,
+    [Location] VARCHAR (200) NOT NULL,
+    PRIMARY KEY CLUSTERED ([DeptNo] ASC)
+);
+
+CREATE TABLE [dbo].[Employee] (
+    [EmpNo]       INT           NOT NULL,
+    [EmpName]     VARCHAR (200) NOT NULL,
+    [Designation] VARCHAR (200) NOT NULL,
+    [Salary]      INT           NOT NULL,
+    [DeptNo]      INT           NULL,
+    PRIMARY KEY CLUSTERED ([EmpNo] ASC),
+    FOREIGN KEY ([DeptNo]) REFERENCES [dbo].[Department] ([DeptNo])
+);
+
+
+The API Method will accept Serach COnditions as below
+ DeptName= %DeptName% AND Locaiton=%Location%
+ DeptName= %DeptName% OR Locaiton=%Location%
+
+ The method should return the Employees Details Along with their Department Details based on the Seacrh Condition
+
 
 

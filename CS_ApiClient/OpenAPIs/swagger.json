@@ -5,19 +5,29 @@
     "version": "v1"
   },
   "paths": {
-    "/api/DepartmentAPI": {
+    "/getall": {
       "get": {
         "tags": [
           "DepartmentAPI"
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Department"
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/DepartmentAPI/{id}": {
+    "/getone/{id}": {
       "get": {
         "tags": [
           "DepartmentAPI"
@@ -37,17 +47,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -57,17 +57,7 @@
           "default": {
             "description": "Error",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -75,7 +65,62 @@
             }
           },
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Department"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/createone": {
+      "post": {
+        "tags": [
+          "DepartmentAPI"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Department"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Department"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -184,6 +229,61 @@
   },
   "components": {
     "schemas": {
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "EmpNo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "EmpName": {
+            "type": "string",
+            "nullable": true
+          },
+          "Designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "Salary": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "DeptNo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "DeptNoNavigation": {
+            "$ref": "#/components/schemas/Department"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "DeptNo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "DeptName": {
+            "type": "string",
+            "nullable": true
+          },
+          "Location": {
+            "type": "string",
+            "nullable": true
+          },
+          "Employees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Employee"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ProblemDetails": {
         "type": "object",
         "properties": {
@@ -214,20 +314,20 @@
       "WeatherForecast": {
         "type": "object",
         "properties": {
-          "date": {
+          "Date": {
             "type": "string",
             "format": "date-time"
           },
-          "temperatureC": {
+          "TemperatureC": {
             "type": "integer",
             "format": "int32"
           },
-          "temperatureF": {
+          "TemperatureF": {
             "type": "integer",
             "format": "int32",
             "readOnly": true
           },
-          "summary": {
+          "Summary": {
             "type": "string",
             "nullable": true
           }
