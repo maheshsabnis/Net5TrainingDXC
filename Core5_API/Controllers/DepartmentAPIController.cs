@@ -57,6 +57,8 @@ namespace Core5_API.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				if(dept.DeptNo < 0)
+					 throw new Exception("DeptNo cannot ne -ves");
 				var result = await deptServ.CreateAsync(dept);
 				return result; 
 			}

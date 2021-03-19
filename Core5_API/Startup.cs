@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core5_API.CustomMiddleware; 
 
 namespace Core5_API
 {
@@ -104,6 +105,10 @@ namespace Core5_API
 			// USed for Role-Based-Security
 			app.UseAuthorization();
 
+
+			// use the custome middleware
+
+			app.UseErrorMiddleware();
 			// Subscribe to HTTP EndPoint and Map the Incomming URL with COntroller and Execute it
 			// using all middlewraes loaded in Pipekline
 			app.UseEndpoints(endpoints =>

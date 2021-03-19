@@ -6,13 +6,14 @@
 - Microsoft.EntityFrameworkCore.Tools
 - Microsoft.Data.SqlClient
 
-
-
+# installing dotnet ef
+dotnet tool install --global dotnet-ef
 
 - Database First Approach
 	-  MIgrations Projects where Database is Production-Ready only Application is migrated to newest technologies
 
->dotnet ef dbcontext scaffold "Data Source=.;Initial Catalog=Company;Integrated Security=SSPI" Microsoft.EntityFrameworkCore.SqlServer -o Models
+>dotnet ef dbcontext scaffold "Data Source=.;Initial Catalog=Company;Integrated Security=SSPI" 
+ Microsoft.EntityFrameworkCore.SqlServer -o Models -t t1 t2 t3...
 
 
 
@@ -78,7 +79,14 @@ ctx.Update<Emp>(record);
 ctx.SaveChages(); OR cts.SaveChangesAsync();
 
 
+# Code-First 
 
+- Generating Migrations
+dotnet ef migrations add <NAME-OF-MIGRATION> -c <NAMESPACE.DBCONTEXTCLASS>
+
+- APply Migrations to generate Database and Tables
+
+dotnet ef database update -c <NAMESPACE.DBCONTEXTCLASS>
 
 
 
@@ -114,6 +122,24 @@ DbConbtext
 	- Manage the relationships across tables using Entity Relationships
 
 - ASP.NET Core Web App DI Improvements w.r.t. EF Core 5, i.e. DbConetxtFactory
+
+
+
+# Creating Custom Middleware
+
+Custom Middleware is a method in a class having following rules
+The class must be constructor injected with RequestDelegate  delegate
+The class must have an Invoke() or InvokeAsync() method that accepts the HttpContext as input parameter
+This method contains business logic of middleware and this method will be auto-invoked by the RequestDelegate
+The RequestDelegate accept the input parameters as HttpContext, that why it calls the Invoke() or InvokeAsync() method.  
+Create a class that contains an extension method for IApplicationBuilder 
+The IApplicaitonBuilder contains Use () method to register the Custom Middleware, which is a  class that represents the Custom-Middleware class containing Invoke() or InvokeAsync() method and having RequestDelegate as constructor injected.
+Filters Vs Middlewares
+Filters are available only for MVC Controllers and APIControllers
+Any global logic in ASP.NET Core to be written only for API and MVC Controllers during request processing then write it into filters.
+If a global logic to be written for MVC and API Controllers and also for Razor Pages, then write such logic in Middlewares  
+
+
 
 
 # Hands-on-Labs
@@ -158,6 +184,16 @@ The API Method will accept Serach COnditions as below
  DeptName= %DeptName% OR Locaiton=%Location%
 
  The method should return the Employees Details Along with their Department Details based on the Seacrh Condition
+
+
+ 2. Create a Custom Middleware that will be used to perform following Monitoring Operations on the WEB Method
+	- It should log each request in the Database as
+		- Requested Controller / Action method
+	- It shoould handle the Exception and log the exception into the database (use Database -First Approach) as
+		- ExceptionId (Auto Generate)
+		- Error Message
+		- Error Code (Set it in the code)
+	
 
 
 
