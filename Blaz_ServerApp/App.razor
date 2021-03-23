@@ -1,0 +1,22 @@
+<!--The Routing for Application thoase areb used to route across all resources (component)  
+     in the current application by defaut-->
+<CascadingAuthenticationState>
+	<!--The ROuting Component
+		 AppAssembly, the 'route component parameter' used as 'attribute' of the Router component HTML tag
+		teh value is @typeof(Program).Assembly means all components in the 'current assembly' only
+		PreferExactMatches="@true", match the exact path for handing request for the route component
+		-->
+	<Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
+		<!--Route navigation for all components those are search in current application
+			 under the route data-->
+		<Found Context="routeData">
+			<AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+		</Found>
+		<!--The Fallback ui to be rendered to the browser when the component is not found-->
+		<NotFound>
+			<LayoutView Layout="@typeof(MainLayout)">
+				<p>Sorry, there's nothing at this address.</p>
+			</LayoutView>
+		</NotFound>
+	</Router>
+</CascadingAuthenticationState>

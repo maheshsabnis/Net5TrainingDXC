@@ -1,0 +1,72 @@
+﻿@page "/createdept"
+
+@using Blaz_ServerApp.Models
+@using Blaz_ServerApp.Services
+
+@inject IService<Department, int> deptServ;
+@inject NavigationManager urlHelper
+
+<h3>Create Department Component</h3>
+
+<!--The UI for the component-->
+<!--Model, the model class that will udpated/changed from data binding
+	OnValidSubmit, submit the form based on validations (if applied)-->
+<EditForm Model="@department" OnValidSubmit="@SaveDepartment">
+	<!--Using standard components for data validation execution and validation sullary-->
+	<DataAnnotationsValidator/>
+	<ValidationSummary/>
+
+	<div class="container">
+		<div class="form-group">
+			<label>Dept No</label>
+			<InputNumber class="form-control" @bind-Value="@department.DeptNo"></InputNumber>
+		</div>
+		<div class="form-group">
+			<label>Dept Name</label>
+			<InputText class="form-control" @bind-Value="@department.DeptName"></InputText>
+		</div>
+		<div class="form-group">
+			<label>Location</label>
+			<InputText class="form-control" @bind-Value="@department.Location"></InputText>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Save" class="btn btn-success" />
+			<input type="button" value="Clear" class="btn btn-warning" @onclick="@ClearInputs" />
+		</div>
+	</div>
+</EditForm>
+@code {
+	// the Logical model for the component
+	// Lifecycel methods
+	// Data Members
+	// Data Elements used to Bind with UI
+	// these must be private to the component
+	// Methods to Link with UI Events
+	// Provate methods
+
+	private Department department;
+
+	/// <summary>
+	/// Write code for
+	/// 1. instance creation for Data members e.g. single object or collction
+	/// 2. performing respurce intensive task using async execution e.g. HTTp Calls
+	///
+	/// </summary>
+	/// <returns></returns>
+	protected override Task OnInitializedAsync()
+	{
+		department = new Department();
+		return base.OnInitializedAsync();
+	}
+
+	async Task SaveDepartment()
+	{
+		// logic to create a new Department
+		department = await deptServ.CreateAsync(department);
+		urlHelper.NavigateTo("/listdept");
+	}
+	void ClearInputs()
+	{
+		department = new Department();
+	}
+}

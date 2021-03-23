@@ -195,5 +195,89 @@ The API Method will accept Serach COnditions as below
 		- Error Code (Set it in the code)
 	
 
+# Blazor  Application Development
 
+- Identity using ASP.NET Core Identity can be by default configured in Blazor Serevr App but 
+	not in Blazor Web Assermbly Apps
+
+
+1. Blazor Server Application
+	- ComponentEndpointConventionBuilder Class that is responsible to serialize the HTML DOM 
+		for component back to Browser over the Socket
+	- Microsoft.AspNetCore.Components
+		- Namespace that contains all component Types for UI Creation, Security, Events and Databinding
+		- Provision for the Dependency Injection for objects registered in the Startup class
+		- Parser for directives(?)
+			- @page, the component container
+			- @inject, for dependency injection
+			- @using, referring namespace
+			- @typepara, for UI Template parameters
+	- The 'name' of the compoent will be the 'file-name'.razor used to define then UI of the component
+		- the component will be referred for UI rendering based on the filename
+			- e.g. MyCOmponent.razor is the component file
+				- <MyComponent>
+
+
+# Programming with Blazor
+
+Blazor Components
+- It has UI
+- Data Members
+- Methods
+- COmponents has
+	- UI with Data Binding for Value / Editable elements
+	- For Intractive UI elements e.g. Buttons
+		- Event Binding
+
+	- The '@' synbol aka directive symbol
+		- The CSharp property / method execution
+- Examples
+	- @bind-Value
+		- Performs Two-Way binding for UI elements
+			- Detects the Default event of the UI element in 'Browser' and then updates the property of the Component  
+			object
+	- @onclick, the click event	
+
+
+
+
+
+1. USing Server App
+	- Using ASP.NET Core Features for App Development
+2. Using WebAssembly App
+	- Working with javascript
+		- CSharp to JS
+		- JS to CShrap
+	- state management (Very Importat)
+		- Plug-Ins
+			- Local State
+			- Application State managemnt
+		- Parent-Child Communication
+	- HTTP Server Access using OpenAPI
+		- WEB API to Blazor
+	- Routing for Lazy Loading
+		- External Razor Libs for Application Modularity
+	- RenderFragment for Template
+		- Re-Usability of UI for relief from complexity of UI
+	- Secure Access to HTTP Services
+		- User Based Security
+			- Microsoft Identity Platform for AAD
+		- Token Based Authentication
+	- Unit Testing
+		- COmponent Testing
+	- Deployment
+		- API App Deployment for Cloud
+		- On-Premises
+
+
+# Blazor Hands-on labs
+
+1. Create a Component thst will be used to show the following output
+	- The Component must have a Textbox where the end-use will enter the serch value to fetch records of Employees
+		(Mandatory to be done today)
+	- TestData
+		- Search Value many be DeptName="IT"
+			- based on this search value data has to be fetched
+2. Remove the hard-coding of Department column name from the table that is showing List of Deparments 
+	- (Mandatory to be done today)
 

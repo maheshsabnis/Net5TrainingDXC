@@ -1,0 +1,41 @@
+﻿@page "/"
+@namespace Blaz_ServerApp.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blaz_ServerApp</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="Blaz_ServerApp.styles.css" rel="stylesheet" />
+</head>
+<body>
+	<!--ServerPrerendered: First Prenendered on server anmd then rendering wil takes place on srever based on events-->
+	<!--RenderMode.Server: Render based on events (interactice) once the Socket Connection is established
+		 from browser to server ()-->
+	<component type="typeof(App)" render-mode="ServerPrerendered" />
+
+	<div id="blazor-error-ui">
+		<environment include="Staging,Production">
+			An error has occurred. This application may no longer respond until reloaded.
+		</environment>
+		<environment include="Development">
+			An unhandled exception has occurred. See browser dev tools for details.
+		</environment>
+		<a href="" class="reload">Reload</a>
+		<a class="dismiss">🗙</a>
+	</div>
+
+
+	<!--Manage the communciation between the Browser and Blazor Server App over the SignalR (Socker)-->
+	<script src="_framework/blazor.server.js"></script>
+	<!--Refer all JavaScript files here for JavaScript Interoparability -->
+</body>
+</html>

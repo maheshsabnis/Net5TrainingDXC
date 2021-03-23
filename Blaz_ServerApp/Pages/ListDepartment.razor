@@ -1,0 +1,48 @@
+﻿@page  "/listdept"
+ 
+@using Blaz_ServerApp.Models
+@using Blaz_ServerApp.Services
+
+@inject IService<Department, int> deptServ;
+
+@inject NavigationManager urlHelper
+
+
+<h2>List of Departmnets</h2>
+<input type="button" @onclick="@NavigateToCreate" value="Create"/>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>Dept No</th>
+			<th>Dept Name</th>
+			<th>Location</th>
+		</tr>
+	</thead>	
+	<tbody>
+		@foreach (Department dept in departments)
+		{
+		<tr>
+			<td>@dept.DeptNo</td>
+			<td>@dept.DeptName</td>
+			<td>@dept.Location</td>
+		</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+	List<Department> departments;
+
+	protected override async Task OnInitializedAsync()
+	{
+		departments = new List<Department>();
+		var res  =  await deptServ.GetAsync();
+		departments = res.ToList();
+	}
+
+	void NavigateToCreate()
+	{
+		// navigate to create component
+		urlHelper.NavigateTo("/createdept");
+	}
+}
