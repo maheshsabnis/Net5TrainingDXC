@@ -244,6 +244,10 @@ Blazor Components
 
 1. USing Server App
 	- Using ASP.NET Core Features for App Development
+	- Sharing Data Across Components
+		- Pass the data using Route Parameters. This is actually the Route Template for Parameterized Routing
+	- What if I have exisitng .NET Class Libraries? Can these be direcly used in the application?
+		- Yes on Windows Machine (Proven and Tested)
 2. Using WebAssembly App
 	- Working with javascript
 		- CSharp to JS
@@ -251,8 +255,46 @@ Blazor Components
 	- state management (Very Importat)
 		- Plug-Ins
 			- Local State
+				- Browser's Storage 
+					- Blazored.SessionStorage
+``` cs
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage;
+```
+
+				- register the Session Storage service in DI container of the applciation
+In Program.cs Main method
+
+``` cs
+	// adding the session storage
+			builder.Services.AddBlazoredSessionStorage();
+			// adding the LocalStorage
+			builder.Services.AddBlazoredLocalStorage();
+
+```
+
+					- Blazored.LocalStorage
 			- Application State managemnt
 		- Parent-Child Communication
+			- Render the Child Component withing the Scope of the Parent Component
+			- IMP POINTS:
+				- The Parent Component must physically contain the Component
+					- The Child Component is Updated when the Parent pass value to it
+				- The Child COmponent MUST have a 'public property' decorated with '[Parameter]' for
+					- Accepting Data from Parent
+						- This will be a public property to accept and manipulate the data
+					- Emitting Data to Parent
+						- Use the 'EventCallback<T>' to bubbleup an event from child to parent
+							- The class that is typed to 'T' where T is a payload aka event arguments that
+								represent the data to be emitted from child to parent
+							- When a child component emit an event, it must be subscribed by the
+								parent component
+					- The Child Component if not rendered independently then need not to have any Route-Template	
+						i.e. the @page directive
+				- When the COmponent is added into the Project, the file name we assign to the component file 
+					will be commited into the project build and the same filename wille be used as then Component 
+						(aka CustomComponent) into the application
+						(NOTE: If you change the file name then the Visual Studio must be restarted)
+
 	- HTTP Server Access using OpenAPI
 		- WEB API to Blazor
 	- Routing for Lazy Loading
@@ -280,4 +322,17 @@ Blazor Components
 			- based on this search value data has to be fetched
 2. Remove the hard-coding of Department column name from the table that is showing List of Deparments 
 	- (Mandatory to be done today)
+3. Complete the Blazor Server App for Edit, Delete components. (Later or optional)
+4. CReate a Table-Grid Component that will be used as child component with the following behavior
+	- It will accept the 'DataSource' property as a ICollection<T> / IEnumerable<T> from its parent (Mandatory)
+	- The componet will generate the Table-Grid based on Schema and Data of the received data using DataSource
+		- Columns and Rows (Mandatory)
+	- The COmponent will have 'CanDelete' property. If this property is set to 'true' by the parent component
+		then each row will contains a Delete button. When this button is clicked, the record must be deleted
+		by the Parent Component. (Child must emit event to parent with the data) (Mandatory)
+	- Optionals exercise (but do it positively)
+		- If the Columns Header is clicked then the data must be sorted ascending/sorted descending based on column value
+		- The component should accept 'PageSize' as parameter to dipslay number of rows, but if the Total Size of
+		 DataSource is greater than 'PageSize' then 'nextPage' and 'previousPage' button should be displayed fo pahinaiton
+			- DataSource.Take<>() / Skip()
 

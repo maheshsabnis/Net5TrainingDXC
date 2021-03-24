@@ -1,0 +1,54 @@
+﻿@page "/deptsender"
+
+@using OpenAPINamespace;
+ <!--Injecting the Service-->
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage;
+
+<EditForm Model="@department" OnValidSubmit="@SaveDepartmentInSessionStorage">
+
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="container">
+		<div class="form-group">
+			<label>Dept No</label>
+			<InputNumber class="form-control" @bind-Value="@department.DeptNo"></InputNumber>
+		</div>
+		<div class="form-group">
+			<label>Dept Name</label>
+			<InputText class="form-control" @bind-Value="@department.DeptName"></InputText>
+		</div>
+		<div class="form-group">
+			<label>Location</label>
+			<InputText class="form-control" @bind-Value="@department.Location"></InputText>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Save" class="btn btn-success" />
+		 
+		</div>
+	</div>
+</EditForm>
+ 
+@code {
+
+
+	private Department department;
+
+
+	protected override Task OnInitializedAsync()
+	{
+		department = new Department();
+
+
+		return base.OnInitializedAsync();
+	}
+
+
+	void SaveDepartmentInSessionStorage()
+	{
+		// the department data will be serialized into the storage
+		// the 'dept' is a key to identify data in Sesion Storage
+		sessionStorage.SetItemAsync<Department>("Dept",department);
+	}
+
+}

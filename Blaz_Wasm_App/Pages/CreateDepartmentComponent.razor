@@ -1,0 +1,77 @@
+﻿@page "/createdept"
+
+@using OpenAPINamespace;  
+@inject NavigationManager uriHelper;
+ 
+<EditForm Model="@department" OnValidSubmit="@SaveDepartment">
+	 
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="container">
+		<div class="form-group">
+			<label>Dept No</label>
+			<InputNumber class="form-control" @bind-Value="@department.DeptNo"></InputNumber>
+		</div>
+		<div class="form-group">
+			<label>Dept Name</label>
+			<InputText class="form-control" @bind-Value="@department.DeptName"></InputText>
+		</div>
+		<div class="form-group">
+			<label>Location</label>
+			<InputText class="form-control" @bind-Value="@department.Location"></InputText>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Save" class="btn btn-success" />
+			<input type="button" value="Clear" class="btn btn-warning" @onclick="@ClearInputs" />
+		</div>
+	</div>
+</EditForm>
+<hr />
+<!--Render the Child Component-->
+@foreach (var dept in departments)
+{
+	<ListDepartmentComponent department="dept"
+							  RowSelected="@receivedData"></ListDepartmentComponent>
+}
+
+<!--If the child event method accept the input parameter then the parent will subscribe as
+	  RowSelected=@((parameter)=>@receiveData(parameter))  
+	-->
+@code {
+
+
+	private Department department;
+	private List<Department> departments;
+
+	protected override Task OnInitializedAsync()
+	{
+		department = new Department();
+		departments = new List<Department>()
+		{
+		  new Department(){DeptNo=10,DeptName="IT",Location="Pune" },
+		   new Department(){DeptNo=20,DeptName="HRD",Location="Benglure" },
+		}
+		;
+
+		return base.OnInitializedAsync();
+	}
+
+	/// <summary>
+	/// The method that will be subscribed to the callback from the child component
+	/// </summary>
+	/// <param name="id"></param>
+	void receivedData(int id)
+	{
+		department = departments.Where(d=>d.DeptNo == id).FirstOrDefault();
+	}
+
+	void SaveDepartment()
+	{
+		departments.Add(department);
+	}
+	void ClearInputs()
+	{
+		department = new Department();
+	}
+}

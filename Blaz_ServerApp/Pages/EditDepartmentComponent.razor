@@ -1,0 +1,73 @@
+﻿<!--the {id:int} is a restriction defined on the parameter-->
+
+@page "/editdept/{id:int}"
+
+@using Blaz_ServerApp.Models
+@using Blaz_ServerApp.Services
+
+@inject IService<Department, int> deptServ;
+@inject NavigationManager urlHelper
+
+<h3>Edit Department Component</h3>
+
+<EditForm Model="@department" OnValidSubmit="@SaveDepartment">
+	<h4>Editing Record matched with DeptNo @id</h4>
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="container">
+		<div class="form-group">
+			<label>Dept No</label>
+			<InputNumber class="form-control" @bind-Value="@department.DeptNo"></InputNumber>
+		</div>
+		<div class="form-group">
+			<label>Dept Name</label>
+			<InputText class="form-control" @bind-Value="@department.DeptName"></InputText>
+		</div>
+		<div class="form-group">
+			<label>Location</label>
+			<InputText class="form-control" @bind-Value="@department.Location"></InputText>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Save" class="btn btn-success" />
+			<input type="button" value="Clear" class="btn btn-warning" @onclick="@ClearInputs" />
+		</div>
+	</div>
+</EditForm>
+@code {
+
+	// define a parameter for the component this must be a public property
+	// IMP NOTE: the property name that is used as parameter must match with the
+	// parameter name defined in the route-template
+	// this parameter will be sued by the component for
+	// 1. accessing value from other component using Route Parameters in the Route-Tamplete
+	// 2. accessing value from the parent component
+	[Parameter]
+	public int id { get; set; }
+
+
+
+	private Department department;
+
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		department = new Department();
+		// load the record to be updated
+		department = await deptServ.GetAsync(id);
+
+		//return base.OnInitializedAsync();
+	}
+
+	async Task SaveDepartment()
+	{
+		// logic to create a new Department
+		department = await deptServ.CreateAsync(department);
+		urlHelper.NavigateTo("/listdept");
+	}
+	void ClearInputs()
+	{
+		department = new Department();
+	}
+}

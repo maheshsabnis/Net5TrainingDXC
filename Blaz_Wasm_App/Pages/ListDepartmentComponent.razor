@@ -1,0 +1,46 @@
+﻿
+ 
+@using OpenAPINamespace 
+ 
+
+<h2>List of Departmnets</h2>
+ 
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>DeptNo</th>
+			<th>DeptName</th>
+			<th>Location</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@department.DeptNo</td>
+			<td>@department.DeptName</td>
+			<td>@department.Location</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="3">
+				<input type="button" value="Select" 
+					   @onclick="@SelectRow"/>	
+			</td>
+		</tr>
+	</tfoot>
+</table>
+
+@code {
+	[Parameter]
+	public Department department { get; set; }
+	[Parameter]
+	public EventCallback<int> RowSelected { get; set; }
+
+	async void SelectRow()
+	{
+		// emiiting the callback by invoking the value
+		await RowSelected.InvokeAsync(department.DeptNo);
+	}
+
+
+}

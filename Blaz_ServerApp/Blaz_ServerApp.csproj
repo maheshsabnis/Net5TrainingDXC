@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core5_API\NetFrwk_Library\NetFrwk_Library.csproj" />
+  </ItemGroup>
+
 </Project>

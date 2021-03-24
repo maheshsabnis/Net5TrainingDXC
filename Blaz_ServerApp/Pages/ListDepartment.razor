@@ -2,7 +2,7 @@
  
 @using Blaz_ServerApp.Models
 @using Blaz_ServerApp.Services
-
+@using System.Reflection 
 @inject IService<Department, int> deptServ;
 
 @inject NavigationManager urlHelper
@@ -13,18 +13,26 @@
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
-			<th>Dept No</th>
-			<th>Dept Name</th>
-			<th>Location</th>
+			@foreach (var column in columns)
+			{
+				<th>@column</th>
+			}
 		</tr>
 	</thead>	
 	<tbody>
 		@foreach (Department dept in departments)
 		{
 		<tr>
-			<td>@dept.DeptNo</td>
-			<td>@dept.DeptName</td>
-			<td>@dept.Location</td>
+			@foreach (var column in columns)
+			{
+				 <td>
+					 @dept.GetType().GetProperty(column).GetValue(dept, null)
+				 </td>
+			}
+			<td>
+				<input type="button" value="Edit" class="btn btn-warning"
+					    @onclick="@((evt)=>NavigateToEdit(dept.DeptNo))"/>
+			</td>
 		</tr>
 		}
 	</tbody>
@@ -32,10 +40,24 @@
 
 @code {
 	List<Department> departments;
+	List<string> columns;
+	Department department;
 
 	protected override async Task OnInitializedAsync()
 	{
 		departments = new List<Department>();
+		columns = new List<string>();
+		department = new Department();
+
+		PropertyInfo[] propertes = department.GetType().GetProperties(
+			  BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance
+			);
+
+		foreach (var property in propertes)
+		{
+			columns.Add(property.Name);
+		}
+
 		var res  =  await deptServ.GetAsync();
 		departments = res.ToList();
 	}
@@ -44,5 +66,11 @@
 	{
 		// navigate to create component
 		urlHelper.NavigateTo("/createdept");
+	}
+
+	void NavigateToEdit(int id)
+	{
+		// navigation to the component with the route parameter
+		urlHelper.NavigateTo($"/editdept/{id}");
 	}
 }

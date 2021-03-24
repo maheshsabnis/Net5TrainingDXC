@@ -1,0 +1,38 @@
+﻿@page "/deptreceiver"
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage;
+@using OpenAPINamespace 
+<h3>Receivd Department Data from the Sesion Storage</h3>
+
+<div class="container">
+	<h3>Data Received from the Session Storage</h3>
+	<strong>
+		Received Data
+		DeptNo : @dept.DeptNo
+		<br />
+		DeptName : @dept.DeptName
+	<br />
+		Location: @dept.Location
+	</strong>
+	<hr />
+	<input type="button" value="clear" class="btn btn-primary"
+		    @onclick="@clearSessionStorage"/>
+</div>
+
+@code { 
+	private Department dept;
+	protected override async Task OnInitializedAsync()
+	{
+		dept = new Department();
+		// read data from the Session Storage
+
+		// retrieve data from session storage usingf key
+		dept = await sessionStorage.GetItemAsync<Department>("Dept");
+	//	await sessionStorage.RemoveItemAsync("Dept");  // remove item at specific key
+	
+
+	}
+	async Task clearSessionStorage()
+	{
+		await sessionStorage.ClearAsync();
+	}
+}

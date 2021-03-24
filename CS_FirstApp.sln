@@ -22,6 +22,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blaz_ServerApp", "Blaz_Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blaz_WebAssrmblyApp", "Blaz_WebAssrmblyApp\Blaz_WebAssrmblyApp.csproj", "{58A6FCF9-3044-4F81-8FA8-61820A737E0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrwk_Library", "..\Core5_API\NetFrwk_Library\NetFrwk_Library.csproj", "{89B6DC4A-4B1D-4650-95EF-8B7F8595B202}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blaz_Wasm_App", "Blaz_Wasm_App\Blaz_Wasm_App.csproj", "{2B8AF723-7683-442B-9288-2C59C590665C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,14 @@ Global
 		{58A6FCF9-3044-4F81-8FA8-61820A737E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A6FCF9-3044-4F81-8FA8-61820A737E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A6FCF9-3044-4F81-8FA8-61820A737E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89B6DC4A-4B1D-4650-95EF-8B7F8595B202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B6DC4A-4B1D-4650-95EF-8B7F8595B202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B6DC4A-4B1D-4650-95EF-8B7F8595B202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B6DC4A-4B1D-4650-95EF-8B7F8595B202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8AF723-7683-442B-9288-2C59C590665C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8AF723-7683-442B-9288-2C59C590665C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8AF723-7683-442B-9288-2C59C590665C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8AF723-7683-442B-9288-2C59C590665C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
