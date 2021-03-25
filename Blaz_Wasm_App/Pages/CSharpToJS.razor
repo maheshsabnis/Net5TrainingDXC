@@ -1,0 +1,68 @@
+﻿@page "/cstojs"
+<h3>CSharp To JS</h3>
+
+<table class="table table-bordered">
+	<tr>
+		<td>
+			<input type="button" value="CLick Me" onclick="callCSharpMethods.displayMessage()"/>
+		</td>
+		<td>
+			<input type="button" value="CLick Me with Custom Name"  onclick="callCSharpMethods.displayMessageCustomName()"/>
+		</td>
+		<td>
+			<input type="button" value="CLick Me with parameters for Add" onclick="callCSharpMethods.addValues()"/>
+		</td>
+		<td>
+			<input type="button" value="Make Http Call from CSharp" onclick="callCSharpMethods.getDataFromAJAX()"/>
+		</td>
+	</tr>
+</table>
+
+
+@code {
+	// to expose Charp methods in JS, follow below rules
+	// 1. the method must be public static
+	// 2. the methos is decorated with JSInvokableAttribute class
+	// 3.in JavaScript, the metod will accessed using "DotNet.invokeMethodAsync()" method
+	// 4. DotNet.invokeMethodAsync(), will be received from blazor.webassembly.js that is using
+	// dotnet.x.x.x.js (x.x.x) is version of the JavaScript for Blazor
+
+	[JSInvokable]
+	public static Task Display()
+	{
+		return Task.FromResult<string>("I am Message from CSharp");
+	}
+	// the custom name 'showMessage' will be used by JavaScript
+	[JSInvokable("showMessage")]
+	public static Task DisplayWithCustomName()
+	{
+		return Task.FromResult<string>("I am Message from CSharp with Custom Name");
+	}
+
+	[JSInvokable("add")]
+	public static Task SumNumberss(int x,int y)
+	{
+		return Task.FromResult<int>(x+y);
+	}
+
+
+	[JSInvokable("getProducts")]
+	public static async Task<ProductInfo[]> GetData()
+	{
+		HttpClient client = new HttpClient();
+		var response = await client.GetFromJsonAsync<ProductInfo[]>("https://apiapptrainingnewapp.azurewebsites.net/api/Products");
+		return response;
+	}
+
+
+	public class ProductInfo
+	{
+		public int ProductRowId { get; set; }
+		public string ProductName { get; set; }
+		public string ProductId { get; set; }
+		public string CategoryName { get; set; }
+		public string Manufacturer { get; set; }
+		public string Description { get; set; }
+		public int BasePrice { get; set; }
+	}
+}

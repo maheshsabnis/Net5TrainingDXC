@@ -1,5 +1,8 @@
 ﻿@page "/counter"
 
+<!--Inject the IJSRuntime-->
+@inject IJSRuntime JS
+
 @using NetFrwk_Library
 @using System.Text.Json
 <h1>Counter</h1>
@@ -7,20 +10,31 @@
 <p>Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-<hr />
-
-
+<br />
 <p>Add: @Result</p>
-
 <button class="btn btn-primary" @onclick="Add">Add</button>
-
-<hr />
-
-
+<br />
 <p>Employees List : @JsonSerializer.Serialize(emps) </p>
-
 <button class="btn btn-primary" @onclick="GetEmployees">GetEmployees</button>
-
+<hr />
+<h3>Calling JS in CSharp</h3>
+<input type="button" value="Display" class="btn btn-primary"
+	    @onclick="Display"/>
+<br />
+<strong>
+	Result of Add is = @Result
+</strong>
+<br />
+<input type="button" value="Add" class="btn btn-success" @onclick="AddJSMethod"/>
+<br />
+<h6>Calling AJAX using JavaScript and collecting Result in the Blazor</h6>
+<input type="button" value="Get AJAX Data" class="btn btn-success" @onclick="GetData" />
+<br />
+<strong>
+	Received data is
+	<br />
+	@data
+</strong>
 
 @code {
 
@@ -29,6 +43,8 @@
 	List<NetFrwk_Library.Employee> emps;
 
 	private int currentCount = 0;
+
+	private string data = "";
 
 	private void IncrementCount()
 	{
@@ -45,6 +61,27 @@
 	{
 		obj = new ClsData();
 		emps = obj.GetEmployees();
+	}
+
+	private async Task Display()
+	{
+		// since the called method does not return use InvokeVoidAsync(), .NET 5
+		await JS.InvokeVoidAsync("display");
+	}
+
+	private async Task AddJSMethod()
+	{
+		Result = await JS.InvokeAsync<int>("doWork", 100,200);
+	}
+	/// <summary>
+	/// the getProducts() returns JavaScript Promise Object
+	/// the async/await in C# will auto resolve/reject the Promise object
+	/// and received data using IJSRuntime
+	/// </summary>
+	/// <returns></returns>
+	private async Task GetData()
+	{
+		data = await JS.InvokeAsync<string>("getProducts");
 	}
 
 }

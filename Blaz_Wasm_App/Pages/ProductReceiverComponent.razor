@@ -1,0 +1,65 @@
+﻿@page "/productreceiver"
+@using Blaz_Wasm_App.Models
+@inject NavigationManager uriHelper;
+@inject AppStateContainer stateService;
+@implements IDisposable
+<h3>Product Receiver Component</h3>
+<h4>Showing Products Base on Category Id : @CatId</h4>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>Product Id</th>
+			<th>Product Name</th>
+			<th>Category Id</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in filteredProducts)
+		{
+			<tr>
+				<td>
+					@item.ProductId
+				</td>
+				<td>
+					@item.ProductName
+				</td>
+				<td>
+					@item.CategoryId
+				</td>
+
+			</tr>
+		}
+	</tbody>
+
+</table>
+@code {
+	private Products products;
+	private List<Product> filteredProducts;
+	private int CatId;
+	protected override void OnInitialized()
+	{
+		products = new Products();
+		filteredProducts = new List<Product>();
+
+		// subscribe to the AppContainserService and receive value from it
+		CatId = stateService.ValueState;
+
+		if (CatId == 0)
+		{
+			// diaplay all products
+			filteredProducts = products;
+		}
+		else
+		{
+			// filter data based on CatId
+			filteredProducts = products.Where(p => p.CategoryId == CatId).ToList();
+		}
+
+	}
+
+	// release
+	public void Dispose()
+	{
+		stateService.OnStateChange -= StateHasChanged;
+	}
+}

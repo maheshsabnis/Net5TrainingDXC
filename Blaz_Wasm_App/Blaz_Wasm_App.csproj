@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -29,6 +29,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core5_API\NetFrwk_Library\NetFrwk_Library.csproj" />
+    <ProjectReference Include="..\Product_LazyLoad\Product_LazyLoad.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<BlazorWebAssemblyLazyLoad Include="Product_LazyLoad.dll"></BlazorWebAssemblyLazyLoad>
+	</ItemGroup>	
 
 </Project>

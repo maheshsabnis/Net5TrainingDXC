@@ -1,0 +1,58 @@
+﻿@page "/categorysender"
+@using Blaz_Wasm_App.Models 
+@inject AppStateContainer stateService;
+@inject NavigationManager uriHelper;
+<!--Component Implements IDispoable to unsubscribe from any event that is subscribed
+	explicitey.-->
+@implements IDisposable
+<h3>Category Sender Component</h3>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>Category Id</th>
+			<th>Category Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in categories)
+		{
+			<tr>
+				<td>
+					@item.CategoryId
+				</td>
+				<td>
+					@item.CategoryName
+				</td>
+				<td>
+					<input type="button" value="Select" 
+						   @onclick="@(()=> SelecCategory(item.CategoryId))"/>
+				</td>
+			</tr>
+		}
+	</tbody>
+	
+</table>
+
+@code {
+	private Categories categories;
+
+	protected override void OnInitialized()
+	{
+		categories = new Categories();
+		// subscribe to the event
+		stateService.OnStateChange += StateHasChanged;
+	}
+
+	void SelecCategory(int id)
+	{
+		stateService.SetValueState(id);
+		uriHelper.NavigateTo("/productreceiver");
+	}
+
+	// release
+	public void Dispose()
+	{
+		stateService.OnStateChange -= StateHasChanged;
+	}
+}

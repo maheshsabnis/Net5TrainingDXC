@@ -19,7 +19,14 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    <!--The js is post load that requires the DOM to be pre-loaded-->
     <script src="_framework/blazor.webassembly.js"></script>
+    <!--All other .JS files will be loaded here-->
+
+    <script src="./SimpleScript.js"></script>
+    <script src="./httpcall.js"></script>
+    <script src="CallCSharp.js"></script>
+
 </body>
 
 </html>
