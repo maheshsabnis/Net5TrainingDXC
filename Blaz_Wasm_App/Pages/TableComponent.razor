@@ -1,0 +1,31 @@
+﻿@typeparam TModel 
+<h3>Table Component</h3>
+
+<table class="table table-bordered table-striped table-dark">
+	<thead>
+		<tr>
+			@Header 
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in DataSource)
+		{
+			<tr>
+				@Rows(item)
+			</tr>
+		}
+	</tbody>
+</table>
+ 
+
+@code {
+	// RendrFragment, will accept DOM or DOM with some data
+	// because uts is applied with [Parameter]
+	[Parameter]
+	public RenderFragment Header { get; set; }
+	// RenderFragment<TModel>, will be the DOM with Data
+	[Parameter]
+	public RenderFragment<TModel> Rows { get; set; }
+	[Parameter]
+	public IEnumerable<TModel> DataSource { get; set; }
+}

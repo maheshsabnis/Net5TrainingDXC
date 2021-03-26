@@ -1,0 +1,28 @@
+﻿@page "/listdept"
+
+@using OpenAPINamespace;
+@inject HttpClient httpClient;
+
+<h3>List Department Component</h3>
+
+<div class="container">
+	<strong>
+		Data Received from REST Call
+		@JsonSerializer.Serialize(departments);
+	</strong>
+</div>
+
+@code {
+	private OpenAPIClient client;
+	private List<Department> departments;
+
+	protected override async Task OnInitializedAsync()
+	{
+		client = new OpenAPIClient("https://localhost:5001/", httpClient);
+
+		var res = await client.GetallAsync();
+		
+		departments = res.ToList();
+
+	}
+}

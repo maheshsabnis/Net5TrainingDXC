@@ -1,0 +1,59 @@
+﻿@page "/employeetablecomponent"
+ 
+<h3>Employee Table Component</h3>
+
+<!--The TableComponent will be replaced by Table with styles applied on it
+	Context, is the propety of the tyep object. THis will be used to
+	define the Data for the DOM for RenderFragment 
+	The Context will be auto type to the typeparam passed to the template
+	in thisn case it is Emps
+	-->
+
+<TableComponent DataSource="employees" Context="emp">
+	<!--The Header will be replaced by thead and tr in it. Passing only DOM-->
+	<Header>
+		<th>EmpNo</th>
+		<th>EmpName</th>
+	</Header>
+	<Rows>
+		<!--Set the Data Context to pass the data alog with DOM-->
+		<td>@emp.EmpNo</td>
+		<td>@emp.EmpName</td>
+	</Rows>
+</TableComponent>
+<hr />
+
+<TableComponent DataSource="employees1">
+	<!--The Header will be replaced by thead and tr in it. Passing only DOM-->
+	<Header>
+		<th>EmpNo</th>
+		<th>EmpName</th>
+	</Header>
+	<Rows>
+		<!--Set the Data Context to pass the data alog with DOM-->
+		<td>@context.EmpNo</td>
+		<td>@context.EmpName</td>
+	</Rows>
+</TableComponent>
+
+@code {
+	private List<Emps> employees = new List<Emps>();
+
+	private List<Emps> employees1 = new List<Emps>();
+
+	protected override void OnInitialized()
+	{
+		employees.Add(new Emps() { EmpNo = 1, EmpName = "A" });
+		employees.Add(new Emps() { EmpNo = 2, EmpName = "B" });
+
+		employees1.Add(new Emps() { EmpNo = 3, EmpName = "C" });
+		employees1.Add(new Emps() { EmpNo = 4, EmpName = "D" });
+		base.OnInitialized();
+	}
+
+	public class Emps
+	{
+		public int EmpNo { get; set; }
+		public string EmpName { get; set; }
+	}
+}

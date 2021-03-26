@@ -336,3 +336,28 @@ In Program.cs Main method
 		 DataSource is greater than 'PageSize' then 'nextPage' and 'previousPage' button should be displayed fo pahinaiton
 			- DataSource.Take<>() / Skip()
 
+5. Create a Blazor WebAssembly SPA that will have following operation (Using Tokens)
+	- A Register Screen that will be used to register the user
+	- A Login Screen Thatb will be used to Login the user and provide access of the Application
+	- Note: Unless the user Logs in, he will not able able to perform Followingm Operations
+		- Create a Product Repository as
+			- Product Name
+			- Product Image
+				- Upload an imahe using either HttpClient or Write A PAPI method that accept Binary Data
+					- Use .NET 5 APIs
+			- Product Description
+			- Category Name	
+			- CreatedBy
+			- CreatedDate
+	    - The Product can be updated only by the user who created the Product
+		- The User can view only those products uploaded by him
+		- Provide an Anonymous funcaitonality to search product based on 
+			- ProductName
+			- CategoryName
+		- The searched product infromation will be displayed in the table along with Image per row 
+		- Save token in Session Storage on Client
+		- Create a ApplState Container object that will store product information for a login user so that
+			this state object will be used by
+				- ProductListComponent
+				- EditProductComponent
+					- No HTTP Request to fetch the Product Information for EDIT it must be taken from the state container
