@@ -312,6 +312,32 @@ In Program.cs Main method
 		- On-Premises
 
 
+- Blazor Testing Facts
+	- The Interactive Testing for UI
+		- Test for the Component
+		- Requirements
+			- Access the Component
+			- Render the component in the Memory
+				- Access The RenderTree
+			- Set the Test Context for the Component
+				- Accessing the Rendered DOM in Test app
+				- Monitor the RenderTree Events for StateChange
+			- Traverse the DOM 
+				- Extract Markup using Selectors
+				- Interactive UI ELements
+					- Raise the events
+- bUnit.web (curretly preview) is the package or library is sued to testng Blazor Apps
+- Practices to be followed
+	- Use Moq to Mock the Component dependencies
+	- Use the NUnit Intergation when using Visual Studio 2019
+	- Make sure that the TestAdapter is loaded 
+
+
+
+
+
+
+
 # Blazor Hands-on labs
 
 1. Create a Component thst will be used to show the following output
